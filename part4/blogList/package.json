@@ -4,10 +4,13 @@
   "description": "Part 4 of FullstackCourse",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose",
     "dev": "nodemon app.js",
     "lint": "eslint .",
     "style": "standard"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "author": "PauF",
   "license": "ISC",
@@ -19,9 +22,10 @@
     "nodemon": "^2.0.12"
   },
   "devDependencies": {
+    "jest": "^27.1.0",
     "standard": "^16.0.3"
   },
   "eslintConfig": {
-		"extends": "./node-modules/standard/eslintrc.json"
-	}
+    "extends": "./node-modules/standard/eslintrc.json"
+  }
 }
