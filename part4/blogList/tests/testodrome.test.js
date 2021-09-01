@@ -1,4 +1,5 @@
 const listHelper = require('../utils/list_helpers')
+
 const blogs = [
   {
     _id: "5a422a851b54a676234d17f7",
@@ -47,7 +48,7 @@ const blogs = [
     url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
     likes: 2,
     __v: 0
-  }  
+  }
 ]
 
 describe('total likes', () => {
@@ -79,7 +80,6 @@ describe('most liked blog', () => {
 })
 
 
-//TO BE REFACTORED
 describe('author with most number of blogs', () => {
   test('Should return Robert with 3', () => {
     const expected = {
@@ -87,6 +87,17 @@ describe('author with most number of blogs', () => {
       blogs: 3
     }
     const result = listHelper.blogsCount(blogs)
+    expect(result).toEqual(expected)
+  })
+})
+
+describe('author with most number of likes', () => {
+  test('Should return Edsger W. Dijkstra with 17', () => {
+    const expected = {
+      author: 'Edsger W. Dijkstra',
+      likes: 17
+    }
+    const result = listHelper.authorLikes(blogs)
     expect(result).toEqual(expected)
   })
 })
