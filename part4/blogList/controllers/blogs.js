@@ -8,20 +8,17 @@ blogsRouter.get('/', async (request, response) => {
 })
 
 blogsRouter.get('/:id', async (request, response) => {
-  console.log('get id starts')
   const id = request.params.id
   const searchBlog = await Blog.findById(id)
   if (!searchBlog) {
     response.status(404).end()
   }
-  console.log('id: ', id, 'search blog: ', searchBlog);
   response.json(searchBlog)
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
-  console.log('delete triggered')
   const id = request.params.id
-  Blog.findByIdAndRemove(id)
+  await Blog.findByIdAndRemove(id)
   response.status(204).end()
 })
 
@@ -30,11 +27,25 @@ blogsRouter.post('/', async (request, response) => {
       title: request.body.title,
       author: request.body.author,
       url: request.body.url,
-      likes: request.body.likes
+      likes: request.body.likes || 0
     }
     const blog = new Blog(newBlog)
     const savedBlog = await blog.save()
     response.json(savedBlog)
+})
+
+blogsRouter.put('/:id', async (request, response) => {
+  const id = request.params.id
+  const body = request.body
+  const blogToUpdate = {
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes
+  }
+
+  const updatedBlog = await Blog.findByIdAndUpdate(id, blogToUpdate, { new: true })
+  response.json(updatedBlog)
 })
 
 module.exports = blogsRouter
