@@ -5,7 +5,7 @@ const config = require('../utils/config')
 const Blog = require('../models/blog')
 const api = supertest(app)
 const helper = require('./test_helper')
-const blog = require('../models/blog')
+
 
 
 beforeAll(async () => {
@@ -55,7 +55,7 @@ describe('when there are blogs previously added in the db', () => {
 
 describe('viewing a specific blog', () => {
   test('a specific blog can be found with a valid id', async () => {
-    const initialBlogs = await helper.notesInDb()
+    const initialBlogs = await helper.blogsInDb()
     const blogToCheck = initialBlogs[0]
     const searchBlog = await api.get(`/api/blogs/${initialBlogs[0].id}`)
       .expect(200)
@@ -79,7 +79,7 @@ describe('adding a new blog', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/)
     
-    const notesAfter = await helper.notesInDb()
+    const notesAfter = await helper.blogsInDb()
     expect(notesAfter).toHaveLength(helper.initialBlogs.length + 1)
     const contents = notesAfter.map(res => res.title)
     expect(contents).toContain(newBlog.title)
@@ -109,18 +109,18 @@ describe('adding a new blog', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/)
     
-    const notesAfter = await helper.notesInDb()
+    const notesAfter = await helper.blogsInDb()
     expect(notesAfter[2].likes).toBe(0)
   })
 })
 
 describe('deleting a blog', () => {
   test('succeeds with 204 status if id is valid', async () => {
-    const blogList = await helper.notesInDb()
+    const blogList = await helper.blogsInDb()
     const toBeDeleted = blogList[0]
     await api.delete(`/api/blogs/${toBeDeleted.id}`).expect(204)
   
-    const updatedList = await helper.notesInDb()
+    const updatedList = await helper.blogsInDb()
   
     expect(updatedList).toHaveLength(blogList.length -1)
   })

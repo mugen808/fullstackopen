@@ -5,11 +5,15 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Third blog",
-  "author": "Sweet WeekXERXES",
-  "url": "http://niceblog.com",
-  "likes": 85
+  "title": "T51asda2312 blog",
+  "author": "Swe1231et WsadsaeekXsas",
+  "url": "http://niceblog.com.br",
+  "likes": 123,
+  "user": "6138b4391fea230c1ffc8096"
 }
+
+###
+DELETE http://localhost:3003/api/blogs/6133758cde6c128fe5445ad8
 
 ###
 PUT http://localhost:3003/api/blogs/612cefc9dceb5fde5a5e527d
@@ -18,3 +22,17 @@ Content-Type: application/json
 {
     "likes": 47
 }
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "notes": [],
+    "username": "kalani",
+    "name": "Kalani Brown",
+    "password": "salainen"
+}
+
+###
+GET http://localhost:3003/api/users
