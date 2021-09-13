@@ -2,9 +2,10 @@ const blogsRouter = require('express').Router()
 const User = require('../models/user')
 const logger = require('../utils/logger')
 const Blog = require('../models/blog')
+const { userExtractor } = require('../middleware/userExtractor')
+
 
 blogsRouter.get('/', async (request, response) => {
-  logger.info('GET Starts')
   const results = await Blog.find({}).populate('user', { username: 1, name: 1 })
   response.json(results)
 })
@@ -18,30 +19,35 @@ blogsRouter.get('/:id', async (request, response) => {
   response.json(searchBlog)
 })
 
-blogsRouter.delete('/:id', async (request, response) => {
+blogsRouter.delete('/:id', userExtractor, async (request, response) => {
   const id = request.params.id
-  await Blog.findByIdAndRemove(id)
-  response.status(204).end()
+  const { user } = await Blog.findById(id)
+  console.log(user.toString(), request.id)
+  if (user.toString() === request.id) {
+    await Blog.findByIdAndRemove(id)
+    return response.status(204).end()
+  }
+  response.status(401).json({ error: "user not allowed to delete post" })
 })
 
-blogsRouter.post('/', async (request, response) => {
-    const body = request.body
-    const user = await User.findById(body.user)
-    const newBlog = {
-      title: body.title,
-      author: body.author,
-      url: body.url,
-      likes: body.likes || 0,
-      user: user._id
-    }
-    const blog = new Blog(newBlog)
-    const savedBlog = await blog.save()
-    user.blogs = user.blogs.concat(savedBlog._id)
-    await user.save()
-    response.json(savedBlog)
+blogsRouter.post('/', userExtractor, async (request, response) => {
+  const body = request.body
+  const user = await User.findById(request.id)
+  const newBlog = {
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes || 0,
+    user: user._id
+  }
+  const blog = new Blog(newBlog)
+  const savedBlog = await blog.save()
+  user.blogs = user.blogs.concat(savedBlog._id)
+  await user.save()
+  response.json(savedBlog)
 })
 
-blogsRouter.put('/:id', async (request, response) => {
+blogsRouter.put('/:id', userExtractor, async (request, response) => {
   const id = request.params.id
   const body = request.body
   const blogToUpdate = {
@@ -50,9 +56,13 @@ blogsRouter.put('/:id', async (request, response) => {
     url: body.url,
     likes: body.likes
   }
+  const { user } = await Blog.findById(id)
 
-  const updatedBlog = await Blog.findByIdAndUpdate(id, blogToUpdate, { new: true })
-  response.json(updatedBlog)
+  if (user.toString() === request.id) {
+    const updatedBlog = await Blog.findByIdAndUpdate(id, blogToUpdate, { new: true })
+    return response.json(updatedBlog)
+  }
+  response.status(401).json({ error: "user not allowed to modify post" })
 })
 
 module.exports = blogsRouter

@@ -7,6 +7,8 @@ const config = require('./utils/config')
 const logger = require('./utils/logger')
 const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
+const loginRouter = require('./controllers/login')
+const errorHandler = require('./middleware/errorHandler')
 const url = config.MONGO_URI
 
 
@@ -23,13 +25,9 @@ app.use(cors())
 app.use(express.json())
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 
-app.use((err, req, res, next) => {
-  if (err) {
-    console.log('error is: ', err)
-    res.status(400).send({ error: 'Something went wrong'})
-  }
-})
+app.use(errorHandler)
 // app.listen(config.PORT, () => {
 //   logger.info(`Server running on port ${config.PORT}`)
 // })

@@ -1,5 +1,9 @@
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const jwt = require('jsonwebtoken')
+const app = require('../app')
+const supertest = require('supertest')
+const api = supertest(app)
 
 const initialBlogs = [
   {
@@ -15,6 +19,45 @@ const initialBlogs = [
     likes: 22
   }
 ]
+
+const initialUsers = [
+  {
+    "blogs": [],
+    "username": "kalani",
+    "name": "Kalani Brown",
+    "password": "salainen"
+  },
+  {
+    "blogs": [],
+    "username": "salami",
+    "name": "Salami Brown",
+    "password": "salamiforya"
+  }
+]
+
+//REMEMBER TO ADD USER TO BLOG!!
+const addingUser = async () => {
+  const response = await api.post('/api/users').send(initialUsers[0])
+  return response
+}
+
+const loggingUser = async () => {
+  const user = { 
+    username: initialUsers[0].username,
+    password: initialUsers[0].password
+  }
+  const login = await api.post('/api/login').send(user)
+  return login
+}
+
+const addingBlog = async () => {
+  const { token } = loggingUser(api)
+  const { id } = usersInDb()
+  const newBlog = { ...initialBlogs[1], user: id }
+  const response = await api.post('/api/blogs').set('Authorization', `Bearer ${token}`).send(newBlog)
+
+  return response
+}
 
 const nonExistingId = async () => {
   const newBlog = {
@@ -41,4 +84,13 @@ const usersInDb = async () => {
   return users.map(user => user.toJSON())
 }
 
-module.exports = { nonExistingId, blogsInDb, initialBlogs, usersInDb }
+module.exports = { 
+  nonExistingId,
+  blogsInDb,
+  initialBlogs,
+  usersInDb,
+  addingUser,
+  loggingUser,
+  addingBlog,
+  initialUsers
+}

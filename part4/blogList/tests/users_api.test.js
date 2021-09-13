@@ -48,6 +48,29 @@ describe('when there is one user in the db', () => {
     const usernames = usersAfterPost.map(user => user.username)
     expect(usernames).toContain(newUser.username)
   })
+
+  test('an invalid user cannot be created', async () => {
+    const users = await helper.usersInDb()
+
+    const newUser = {
+      username: 'Ab',
+      name: 'Abraham Lincoln',
+      password: 'isasdasdas'
+    }
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+    
+    const errorMessage = await api.post('/api/users').send(newUser)
+    
+    const afterList = await helper.usersInDb()
+    expect(afterList).toHaveLength(users.length)
+    expect(errorMessage.body.error).toBe(
+      'User validation failed: username: Path `username` (`Ab`) is shorter than the minimum allowed length (3).'
+    )
+  })
 })
 
 afterAll(() => {
