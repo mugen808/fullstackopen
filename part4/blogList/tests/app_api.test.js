@@ -114,16 +114,29 @@ describe('adding a new blog', () => {
 
   test('if Likes property is missing, default value is 0', async () => {
 
-    const notesBefore = await helper.blogsInDb()
+    const blogsBefore = await helper.blogsInDb()
     const newBlog = {
       title: 'Third second Best Blog',
       author: 'Ferrys Night',
       url: 'http://2ndbestblo.com',
     }
     const addedBlog = await addingBlog(newBlog)
-    const notesAfter = await helper.blogsInDb()
-    expect(notesAfter).toHaveLength(notesBefore.length + 1)
+    const blogsAfter = await helper.blogsInDb()
+    expect(blogsAfter).toHaveLength(blogsBefore.length + 1)
     expect(addedBlog.likes).toBe(0)
+  })
+
+  test('error 401 if token is not provided', async () => {
+    const blogsBefore = await helper.blogsInDb()
+    const newBlog = {
+      title: 'Third second Best Blog',
+      author: 'Ferrys Night',
+      url: 'http://2ndbestblo.com',
+    }
+    await api.post('/api/blogs').send(newBlog).expect(401)
+    const blogsAfter = await helper.blogsInDb()
+    expect(blogsAfter).toHaveLength(blogsBefore.length)
+
   })
 })
 
