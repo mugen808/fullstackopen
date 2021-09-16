@@ -1,0 +1,92 @@
+GET http://localhost:3003/api/blogs
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImthbGFuaSIsImlkIjoiNjEzOGI0MzkxZmVhMjMwYzFmZmM4MDk2IiwiaWF0IjoxNjMxMzcxNTQ0LCJleHAiOjE2MzEzNzUxNDR9.9HJ979GxxRpOtoZuJhQpr0PNjQCKkqnKe9W8SQ_66eY
+
+{
+  "title": "Kleani you gonna make me quit",
+  "author": "JRR Tolken",
+  "url": "http://niceblog.com.br",
+  "likes": 21,
+  "user": "6138b4391fea230c1ffc8096"
+}
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbGFtaSIsImlkIjoiNjEzY2M3MTgyOGRlYTQ4Njk3OTBjYWVkIiwiaWF0IjoxNjMxMzczMDk4LCJleHAiOjE2MzEzNzY2OTh9.Pg2fJ43yTJvRdlfFO9KebYxhKO1EjOVwa0iD_DvMVp8
+
+{
+  "title": "Clean salami",
+  "author": "Prius Tokens",
+  "url": "http://niceblog.com.br",
+  "likes": 32,
+  "user": "613cc71828dea4869790caed"
+}
+
+###
+DELETE http://localhost:3003/api/blogs/613a660b27242b5cbea844c1
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbGFtaSIsImlkIjoiNjEzY2M3MTgyOGRlYTQ4Njk3OTBjYWVkIiwiaWF0IjoxNjMxMzczMDk4LCJleHAiOjE2MzEzNzY2OTh9.Pg2fJ43yTJvRdlfFO9KebYxhKO1EjOVwa0iD_DvMVp8
+
+###
+PUT http://localhost:3003/api/blogs/613a660b27242b5cbea844c1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImthbGFuaSIsImlkIjoiNjEzOGI0MzkxZmVhMjMwYzFmZmM4MDk2IiwiaWF0IjoxNjMxNTQ2Njc2LCJleHAiOjE2MzE1NTAyNzZ9.0W7CHHf9MgPYkiutL_2W2Fb3jOcCqoTqE6Faed9CIxc
+
+{
+    "likes": 47
+}
+
+###
+GET http://localhost:3003/api/users
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "blogs": [],
+    "username": "kalani",
+    "name": "Kalani Brown",
+    "password": "salainen"
+}
+
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "blogs": [],
+    "username": "salami",
+    "name": "Salami Brown",
+    "password": "salamiforya"
+}
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "blogs": [],
+    "username": "pelele",
+    "name": "Ousmane Pelele",
+    "password": "salamiforya"
+}
+
+###
+
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "kalani",
+  "password": "salainen"
+}
+###
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "salami",
+  "password": "salamiforya"
+}
