@@ -1,28 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import blogServices from '../services/blogs'
 import Login from './Login'
 import LoggedIn from './LoggedIn'
 import Error from './Error'
 
-const Form = ({ setUsername, setPassword, username, password, user, setUser, errorMessage, setErrorMessage, blogs }) => {
-  const [newBlog, setNewBlog] = useState({
-    title: '',
-    author: '',
-    url: ''
-  })
+const Form = () => {
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const loggedUser = window.localStorage.getItem('loggedBloglistUser')
+    if (loggedUser) {
+      const user = JSON.parse(loggedUser)
+      setUser(user)
+      blogServices.setToken(user.token)
+    }
+  }, [])
   
   if (!user) {
     return (
       <div>
         <Error errorMessage={errorMessage} />
         <Login
-        setUsername={setUsername} 
-        setPassword={setPassword} 
-        username={username} 
-        password={password} 
-        setUser={setUser}
-        setErrorMessage={setErrorMessage}
+
+          setUser={setUser}
+          setErrorMessage={setErrorMessage}
         />
-    </div>
+      </div>
     )
   }
   return (
@@ -32,9 +36,6 @@ const Form = ({ setUsername, setPassword, username, password, user, setUser, err
       user={user} 
       setUser={setUser} 
       setErrorMessage={setErrorMessage}
-      blogs={blogs}
-      newBlog={newBlog}
-      setNewBlog={setNewBlog}
       />
     </div>
   )

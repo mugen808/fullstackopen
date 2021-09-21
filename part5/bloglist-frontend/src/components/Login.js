@@ -1,19 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import loginServices from '../services/login'
 import blogServices from '../services/blogs'
+import Toggleable from './Toggleable'
 
-const Login = ({ setUsername, setPassword, username, password, setUser, setErrorMessage }) => {
+const Login = ({ setUser, setErrorMessage }) => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
       const user = await loginServices({ username, password })
       blogServices.setToken(user.token)
       window.localStorage.setItem('loggedBloglistUser', JSON.stringify(user))
-      setUser(user)
       setUsername('')
       setPassword('')
+      setUser(user)
+
     } catch(e) {
-      setErrorMessage({ message: 'Wrong credentials!', color: 'red'})
+      setErrorMessage({ message: 'Invalid username or password', color: 'red'})
       setTimeout(() => {
         setErrorMessage(null)
       }, 3000)
@@ -21,7 +25,7 @@ const Login = ({ setUsername, setPassword, username, password, setUser, setError
   }
   
   return (
-    <div>
+    <Toggleable buttonLabel='Login'>
       <form onSubmit={handleLogin}>
         <div>
           <input type="text" placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)} />
@@ -31,7 +35,7 @@ const Login = ({ setUsername, setPassword, username, password, setUser, setError
         </div>
         <button type="submit">Login</button>
       </form>
-    </div>
+    </Toggleable>
   )
 }
 
