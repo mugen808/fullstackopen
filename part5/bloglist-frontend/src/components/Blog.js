@@ -4,7 +4,7 @@ import LikeButton from './LikeButton'
 import DeleteButton from './DeleteButton'
 
 
-const Blog = ({blog, setBlogs, user}) => {
+const Blog = ({ blog, setBlogs, user }) => {
   const blogStyle = {
     border: '2px solid black',
     margin: 1,
@@ -21,8 +21,8 @@ const Blog = ({blog, setBlogs, user}) => {
         <p><strong>Likes:</strong> {blog.likes} <LikeButton blog={blog} setBlogs={setBlogs}/></p>
         <p>{blog.user.name}</p>
         {user.username === blog.user.username && <DeleteButton blog={blog} setBlogs={setBlogs}/>}
-      </Toggleable>    
-    </div>  
+      </Toggleable>
+    </div>
   )
 }
 

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import blogServices from '../services/blogs'
 import Toggleable from './Toggleable'
 
-const BlogForm = ({ setErrorMessage, blogs, setBlogs, getBlogs }) => {
+const BlogForm = ({ setErrorMessage, setBlogs }) => {
   const emptyForm = {
     title: '',
     author: '',
@@ -18,7 +18,7 @@ const BlogForm = ({ setErrorMessage, blogs, setBlogs, getBlogs }) => {
       toggableRef.current.toggleVisibility()
       const blogs = await blogServices.getAll()
       setBlogs(blogs)
-      setErrorMessage({ message: `${newBlog.title} by ${newBlog.author} was added to the Bloglist`, color: 'green'})
+      setErrorMessage({ message: `${newBlog.title} by ${newBlog.author} was added to the Bloglist`, color: 'green' })
       setTimeout(() => {
         setErrorMessage(null)
       }, 3000)
@@ -31,7 +31,7 @@ const BlogForm = ({ setErrorMessage, blogs, setBlogs, getBlogs }) => {
     }
   }
   const handleChange = (e, prop) => {
-    setNewBlog({...newBlog, [prop]: e.target.value})
+    setNewBlog({ ...newBlog, [prop]: e.target.value })
   }
 
   return (

@@ -2,7 +2,7 @@ import React from 'react'
 
 const ErrorMessage = ({ errorMessage }) => {
   if (errorMessage) {
-    
+
     const style = {
       border: `5px solid ${errorMessage.color}`,
       borderRadius: '5px',

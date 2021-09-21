@@ -16,7 +16,7 @@ const Form = () => {
       blogServices.setToken(user.token)
     }
   }, [])
-  
+
   if (!user) {
     return (
       <div>
@@ -32,10 +32,10 @@ const Form = () => {
   return (
     <div>
       <Error errorMessage={errorMessage} />
-      <LoggedIn 
-      user={user} 
-      setUser={setUser} 
-      setErrorMessage={setErrorMessage}
+      <LoggedIn
+        user={user}
+        setUser={setUser}
+        setErrorMessage={setErrorMessage}
       />
     </div>
   )

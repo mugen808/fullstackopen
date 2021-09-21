@@ -17,13 +17,13 @@ const Login = ({ setUser, setErrorMessage }) => {
       setUser(user)
 
     } catch(e) {
-      setErrorMessage({ message: 'Invalid username or password', color: 'red'})
+      setErrorMessage({ message: 'Invalid username or password', color: 'red' })
       setTimeout(() => {
         setErrorMessage(null)
       }, 3000)
     }
   }
-  
+
   return (
     <Toggleable buttonLabel='Login'>
       <form onSubmit={handleLogin}>

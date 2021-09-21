@@ -9,7 +9,7 @@ const LoggedIn = ({ user, setUser, setErrorMessage }) => {
   useEffect(() => {
     async function getBlogs() {
       const blogs = await blogServices.getAll()
-      setBlogs(blogs)  
+      setBlogs(blogs)
     }
     getBlogs()
   }, [])
@@ -27,11 +27,11 @@ const LoggedIn = ({ user, setUser, setErrorMessage }) => {
       <h3>Hello, {user.name}</h3>
       <button onClick={handleLogOut}>Logout</button>
       <h4>Create a new Blog</h4>
-      <BlogForm setErrorMessage={setErrorMessage} blogs={blogs} setBlogs={setBlogs}/>
+      <BlogForm setErrorMessage={setErrorMessage} setBlogs={setBlogs}/>
       <h2>blogs</h2>
-        {sortedBlogs.map(blog =>
-          <Blog key={blog.id} blog={blog} setBlogs={setBlogs} user={user}/>
-        )}
+      {sortedBlogs.map(blog =>
+        <Blog key={blog.id} blog={blog} setBlogs={setBlogs} user={user}/>
+      )}
     </div>
   )
 }
