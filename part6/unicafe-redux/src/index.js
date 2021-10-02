@@ -32,8 +32,8 @@ const App = () => {
   }
   return (
     <div>
-      <button onClick={handleClick}>good</button> 
-      <button onClick={handleClick}>neutral</button> 
+      <button onClick={handleClick}>good</button>
+      <button onClick={handleClick}>neutral</button>
       <button onClick={handleClick}>bad</button>
       <button onClick={handleClick}>reset stats</button>
       <div>good {store.getState().good}</div>
