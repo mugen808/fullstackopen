@@ -1,4 +1,5 @@
 import reducer from './anecdoteReducer'
+import deepFreeze from 'deep-freeze'
 
 describe('noteReducer', () => {
   test('an anecdote can be upvoted', () => {
@@ -21,6 +22,7 @@ describe('noteReducer', () => {
       }
     }
 
+    deepFreeze(state)
     const newAnecdote = reducer(state, action)
 
     expect(newAnecdote).toHaveLength(2)
