@@ -1,38 +1,43 @@
-
-
-const getId = () => (100000 * Math.random()).toFixed(0)
-
-const asObject = (anecdote) => {
-  return {
-    content: anecdote,
-    id: getId(),
-    votes: 0
-  }
-}
-// const initialState = anecdotesAtStart.map(anec => asObject(anec))
+import anecdotesServices from '../services/anecdotesServices'
 
 export const newAnecdote = (anecdote) => {
-  return {
-    type: 'NEW_ANECDOTE',
-    payload: asObject(anecdote)
+  return async dispatch => {
+    const newEntry = await anecdotesServices.createNew(anecdote)
+    dispatch({
+      type: 'NEW_ANECDOTE',
+      payload: newEntry
+    })
   }
 }
 
-export const initAnecdote = (anecdotes) => {
-  return {
-    type: 'INIT_ANECDOTES',
-    payload: anecdotes
+export const initAnecdotes = () => {
+  return async dispatch => {
+    const anecdotes = await anecdotesServices.getAll()
+    dispatch({
+      type: 'INIT_ANECDOTES',
+      payload: anecdotes
+    })
   }
 }
 
 export const upvoteAnecdote = (id) => {
-  return {
-    type: 'UPVOTE',
-    payload: {
-      id: id
-    }
+  return async dispatch => {
+    await anecdotesServices.upvoteAnecdote(id)
+    dispatch({
+      type: 'UPVOTE',
+      payload: { id }
+    })
   }
 }
+
+// export const upvoteAnecdote = (id) => {
+//   return {
+//     type: 'UPVOTE',
+//     payload: {
+//       id: id
+//     }
+//   }
+// }
 
 const anecdoteReducer = (state = [], action) => {
   switch(action.type) {

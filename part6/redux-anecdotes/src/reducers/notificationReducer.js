@@ -1,33 +1,18 @@
-const initialState = {
-  message: 'Initial notification',
-  kind: 'create'
-}
-
-export const newAnecdoteNotification = (message) => {
-  return {
-    type: '@notifications/create_new',
-    payload: {
-      message,
-      kind: 'create'
-    }
-  }
-}
-export const upvoteNotification = (message) => {
-  return {
-    type: '@notifications/upvote',
-    payload: {
-      message,
-    }
-  }
-}
-
-export const clearNotification = () => {
+const clearNotification = () => {
   return {
     type: '@notifications/clear',
     payload: {
       message: '',
       kind: 'clear'
     }
+  }
+}
+export const newNotification = (message, duration) => {
+  return async dispatch => {
+    dispatch({ type: '@notifications/create_new', payload: { message, kind: 'create' } })
+    await setTimeout(() => {
+      dispatch(clearNotification())
+    }, duration * 1000);
   }
 }
 

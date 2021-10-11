@@ -11,20 +11,11 @@ const Notification = () => {
     borderWidth: 1,
     display: 'none'
   }
-
-  if (kind === 'upvote') {
-    style.display = ''
-    return (
-      <div style={style}>
-        One upvote for '{message}'
-      </div>
-    )
-  }
   if (kind === 'create') {
     style.display = ''
     return (
       <div style={style}>
-        Message created! '{message}''
+        {message}
       </div>
     )
   }
