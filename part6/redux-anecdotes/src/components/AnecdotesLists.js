@@ -11,10 +11,12 @@ const Anecdotes = () => {
   const { filter } = useSelector(state => state.filter)
   const anecdotes = useSelector(state => state.anecdotes.sort((a, b) => b.votes - a.votes))
   const filteredList = anecdotes.filter(entry => entry.content.toLowerCase().includes(filter.toLowerCase()))
+  const timeoutId = useSelector(state => state.notifications.timeout)
 
   const vote = (id, content) => {
+    
     dispatch(upvoteAnecdote(id))
-    dispatch(newNotification(`Upvoted: '${content}'`, 3))
+    dispatch(newNotification(`Upvoted: '${content}'`, 3, timeoutId))
   }
 
   return (
