@@ -6,6 +6,7 @@ import About from './components/About'
 import Footer from './components/Footer'
 import CreateNew from './components/CreateNew'
 import AnecdoteDetail from './components/AnecdoteDetail'
+import Notification from './components/Notification'
 
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
@@ -52,15 +53,14 @@ const App = () => {
         <h1>Software anecdotes</h1>
         <Menu />
       </div>
-
+      { notification ? <Notification notification={notification} /> : null}
       <Switch>
-
         <Route path="/about">
           <About />
         </Route>
 
         <Route path="/create_new">
-          <CreateNew addNew={addNew} />
+          <CreateNew addNew={addNew} setNotification={setNotification} />
         </Route>
 
         <Route exact path="/">
@@ -70,8 +70,8 @@ const App = () => {
         <Route path="/anecdotes/:anecdoteId">
           <AnecdoteDetail anecdotes={anecdotes} />
         </Route>
-        
       </Switch>
+
       <Footer />
     </BrowserRouter>
 
